@@ -10,7 +10,7 @@ public class SignUpActivity extends AppCompatActivity {
     //Explicit ประกาศตัวแปร
     private EditText nameEditText, surnameEditText, userEditText, passwordEditText;
     private String nameString, surnameString, userString, passwordString;
-
+    private static final String urlUpload = "http://swiftcodingthai.com/pbru2/add_user_master.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.editText4);
 
     }//nMain Method
+
+
     public void clickSignUpSign(View view){
         nameString = nameEditText.getText().toString().trim();//trim cut space
         surnameString = surnameEditText.getText().toString().trim();
@@ -36,11 +38,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         } else {
             //False
-
-
+            uploadValueToServer();
         }
 
     }//nClick Method
+
+    private void uploadValueToServer() {
+
+    }//nUpload Method
 
     private boolean checkSpace() {
 
