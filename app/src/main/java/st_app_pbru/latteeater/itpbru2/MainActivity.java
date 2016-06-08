@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -84,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
             if (passwordString.equals(loginStrings[4])) {
                 Toast.makeText(this, "Welcome "+ loginStrings[1]+" "+loginStrings[2],
                         Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+                intent.putExtra("Login", loginStrings);
+                startActivity(intent);
+                finish();
+
             } else {
                 MyALERT myALERT = new MyALERT();
                 myALERT.myDalog(this, "Password False", "Please Try Again");
