@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CalendarView;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -29,6 +30,11 @@ public class CalendarActivity extends AppCompatActivity {
 
     }//nMain Method
 
+    public void clickShowGraph(View view){
+        Intent intent = new Intent(CalendarActivity.this, GraphActivity.class);
+        intent.putExtra("Login", getIntent().getStringArrayExtra("Login"));
+        startActivity(intent);
+    }//nClickShowGraph
     private void confirmDialog(int day, int month, int year) {
 
         final String strDate = Integer.toString(day) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year);
