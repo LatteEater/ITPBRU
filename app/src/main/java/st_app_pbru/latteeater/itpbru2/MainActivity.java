@@ -7,22 +7,35 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     //Explicit
     private MyManager myManager;
     private static final String urlJSON = "http://swiftcodingthai.com/pbru2/get_user_master.php";
+    private EditText userEditText, passwordEditText;
+    private String userString, passwordString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Bind Widget
+        userEditText = (EditText) findViewById(R.id.editText5);
+        passwordEditText = (EditText) findViewById(R.id.editText6);
+
+
 
         myManager = new MyManager(this);
 
@@ -34,6 +47,24 @@ public class MainActivity extends AppCompatActivity {
         mySynJSON();
 
     } // nMain Method
+
+    public void clickSignIn(View view){
+
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+        //CheckSpace
+        if (userString.equals("")||passwordString.equals("")) {
+            MyALERT myALERT = new MyALERT();
+            myALERT.myDalog(this, "Error", "Please Input All");
+        } else {
+            checkUserAndPassword();
+        }
+
+    }//nClickSignIn
+
+    private void checkUserAndPassword() {
+
+    }
 
     private void mySynJSON() {
 
@@ -83,6 +114,29 @@ public class MainActivity extends AppCompatActivity {
             try {
                 progressDialog.dismiss();
                 Log.d("7June", "JSON==>"+s);
+
+                JSONArray jsonArray = new JSONArray(s);
+                String[] idStrings = new String[jsonArray.length()];
+                String[] nameStrings = new String[jsonArray.length()];
+                String[] surnameStrings = new String[jsonArray.length()];
+                String[] userStrings = new String[jsonArray.length()];
+                String[] passwordStrings =  new String[jsonArray.length()];
+
+                for (int i = 0;i<jsonArray.length();i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    idStrings[i] = jsonObject.getString("id");
+                    nameStrings[i] = jsonObject.getString(MyManager.column_name);
+                    surnameStrings[i] = jsonObject.getString(MyManager.column_surname);
+                    userStrings[i] = jsonObject.getString(MyManager.column_user);
+                    passwordStrings[i] = jsonObject.getString(MyManager.column_password);
+
+                    myManager.addNewUser(idStrings[i], nameStrings[i], surnameStrings[i],
+                            userStrings[i], passwordStrings[i]);
+
+                }//nFor
+
             } catch (Exception e) {
             e.printStackTrace();
             }
