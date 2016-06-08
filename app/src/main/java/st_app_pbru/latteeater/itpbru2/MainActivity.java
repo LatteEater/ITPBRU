@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
                     MODE_PRIVATE, null);
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FORM userTABLE WHERE User = "+"'"+userString+"'", null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM userTABLE WHERE User = "+"'"+userString+"'", null);
             cursor.moveToFirst();
 
             loginStrings = new String[cursor.getColumnCount()];
